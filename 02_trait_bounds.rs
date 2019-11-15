@@ -28,6 +28,13 @@ struct HashMap<Key: Hash + Eq, Value> {
     val: Value
 }
 
+// Each use of HashMap with concrete types Key and Value results in 
+// a different concrete HashMap type.
+// This means HashMap can lay out the keys and values inline.
+// From the point of view of the optimizer, there is *no abstraction*.
+// This is why Static Dispatch results in Zero-Cost abstraction!
+// Static Dispatch allows for inlining across use of generics.
+
 impl Eq for i64 {
     fn eq(&self, other: &i64) -> bool {
         *self == *other
